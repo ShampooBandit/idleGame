@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "idleGame",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

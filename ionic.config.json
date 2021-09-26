@@ -1,0 +1,7 @@
+{
+  "name": "idleGame",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
