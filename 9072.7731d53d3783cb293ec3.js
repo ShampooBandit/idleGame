@@ -1,0 +1,1 @@
+(self.webpackChunkidleGame=self.webpackChunkidleGame||[]).push([[9072],{9072:(s,o,e)=>{"use strict";e.r(o),e.d(o,{ion_text:()=>l});var r=e(3150),t=e(7585),c=e(1269);const l=class{constructor(s){(0,r.r)(this,s)}render(){const s=(0,t.b)(this);return(0,r.h)(r.H,{class:(0,c.c)(this.color,{[s]:!0})},(0,r.h)("slot",null))}};l.style=":host(.ion-color){color:var(--ion-color-base)}"}}]);
