@@ -10,9 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ghpage": "ionic build --prod --base-href https://shampoobandit.github.io/idleGame/ && npx angular-cli-ghpages --dir=www",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "ghpage": "ionic build --prod --base-href https://shampoobandit.github.io/idleGame/ && npx angular-cli-ghpages --dir=www"
   },
   "private": true,
   "dependencies": {
