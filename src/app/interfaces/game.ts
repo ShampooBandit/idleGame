@@ -20,6 +20,7 @@ export interface Equip {
     name: String,
     code: String,
     description: String,
+    slot: String,
     stats: Stats,
     cost: ResourceAmount[],
     id: Number
