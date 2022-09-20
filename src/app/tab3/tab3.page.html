@@ -8,34 +8,36 @@
 
 <ion-content [fullscreen]="true">
   <div class="equipment-container">
-    <div class="player-stats">
-      <div class="player-info-name">
+    <table class="player-stats">
+      <td class="player-info-name">
         <span>{{data.player.name}}</span>
-      </div>
-      <div class="player-info-stat">
+      </td>
+      <td class="player-info-stat">
         <span>HP</span>
         <span>{{data.player.health}}</span>
-      </div>
-      <div class="player-info-stat">
+      </td>
+      <td class="player-info-stat">
         <span>Pow</span>
         <span>{{data.player.power}}</span>
-      </div>
-      <div class="player-info-stat">
+      </td>
+      <td class="player-info-stat">
         <span>Def</span>
         <span>{{data.player.defence}}</span>
-      </div>
-      <div class="player-info-stat">
+      </td>
+      <td class="player-info-stat">
         <span>Level</span>
         <span>{{data.player.level}}</span>
-      </div>
-      <div class="player-info-stat">
+      </td>
+      <td class="player-info-stat">
         <span>Experience</span>
         <span>{{data.player.experience}} / {{data.player.nextExperience}}</span>
-      </div>
-    </div>
+      </td>
+    </table>
+
     <div class="player-gear">
       <img class="player-silhouette" src="assets/player/silhouette.png" style="width:192px; height:407px">
     </div>
+    
     <div class="player-inventory">
       
     </div>
