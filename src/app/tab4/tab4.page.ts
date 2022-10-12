@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameDataService } from '../api/game-data.service';
 
 @Component({
   selector: 'app-tab4',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tab4.page.scss'],
 })
 export class Tab4Page implements OnInit {
+  data: any;
 
-  constructor() { }
+  constructor(private gameData: GameDataService) { }
 
   ngOnInit() {
+    this.data = this.gameData;
   }
 
 }

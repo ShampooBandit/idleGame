@@ -14,20 +14,22 @@
         <div id="safety-text" *ngIf="f.safe" style="background-color: green; width: 64px;">Safe</div>
         <div id="safety-text" *ngIf="!f.safe" style="background-color: red; width: 96px;">Dangerous</div>
       </div>
-      
-      <div class="floor-content">
-        <div class="floor-enemy-groups" *ngIf="!inBattle">
-          <div class="enemy-group-container" *ngFor="let g of f.groups; index as j" (click)="startBattle(g, i)">
-            <div class="enemy-group-infobox">
-              <div *ngFor="let e of g.enemies; index as k">
-                <div class="infobox-text">{{e.type}} {{e.name}}</div>
-              </div>
+
+      <section class="floor-content">
+        <ul class="floor-drops-container">
+        </ul>
+        <ul class="floor-enemy-container">
+          <li class="floor-enemy" *ngFor="let e of f.enemies; index as k" id="{{'f'+i.toString()+(e.name + k).toString()}}">
+            <span class="floor-enemy-name">{{setEnemyPos(e, k, i)}}{{e.type}} {{e.name}}</span>
+            <div class="fillbar-container">
+              <div class="fillbar">{{enemyHealthBarWidth(e, k, i)}}</div>
             </div>
-            <img class="enemy-sprite" src="assets/enemies/imp.png" style="width: 128px; height: 128px">
-          </div>
-        </div>
-      </div>
+            <img class="enemy-sprite" src="assets/enemies/imp.png" style="width: 128px; height: 102px" (click)="clickEnemy(e, i)">
+          </li>
+        </ul>
+      </section>
     </div>
+
     <div id="floor-purchase" (click)="buildNextFloor()">
       <span style="color: black; margin-right: 12px;">Build next floor:</span>
       <img src="assets/resources/Build.png" style="width: 24px; height: 24px;">
@@ -35,6 +37,7 @@
     </div>
   </div>
 
+  <!--
   <div id="battleContainer" class="battle-container hidden">
     <div class="battle-player-actions" *ngIf="inBattle && !transitionBattle">
       <button class="action" (click)="doBattleTurn()">AGGRESS</button>
@@ -75,4 +78,5 @@
       </div>
     </div>
   </div>
+  -->
 </ion-content>

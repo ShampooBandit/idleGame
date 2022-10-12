@@ -31,19 +31,19 @@ export class Tab1Page implements OnInit {
     this.inBattle = false;
     this.transitionBattle = false;
 
-    let box = document.getElementById('battleContainer')
-    box.addEventListener('animationend', () => {
-      if(this.inBattle) {
-        box.classList.add('hidden'); 
-        this.inBattle = false;
-      } else {
-        box.classList.add('grown');
-        this.inBattle = true;
-      }
+    //let box = document.getElementById('battleContainer')
+    //box.addEventListener('animationend', () => {
+    //  if(this.inBattle) {
+    //    box.classList.add('hidden'); 
+    //    this.inBattle = false;
+    //  } else {
+    //    box.classList.add('grown');
+    //    this.inBattle = true;
+    //  }
       
-      box.style.animationName = '';
-      this.transitionBattle = false;
-    })
+    //  box.style.animationName = '';
+    //  this.transitionBattle = false;
+    //})
     setInterval(() => {this.checkForEnemies()}, 5000)
   }
 
@@ -167,14 +167,96 @@ export class Tab1Page implements OnInit {
         if(!floor.safe) {
           let chance = this.randomInt(100)
   
-          if(chance < (100 - (floor.groups.length * 20))) {
-            this.generateEnemyGroup(i)
+          if(chance < (100 - (floor.enemies.length * 5))) {
+            //this.generateEnemyGroup(i)
+            this.spawnEnemy(i)
           }
+          
+          this.moveEnemies(i)
         }
   
         i++
       });
     }
+  }
+
+  moveEnemies(floorNum) {
+    let i = 0;
+    this.data.house.floors[floorNum].enemies.forEach(enemy => {
+      let chance = this.randomInt(100)
+      if(chance < 25) {
+        let v = 'f'+floorNum.toString()+enemy.name+i
+        let e = <HTMLElement>document.getElementById('f'+floorNum.toString()+enemy.name+i)
+        if(e != null) {
+        let destx = this.randomInt(parseInt(getComputedStyle(e.parentElement).width.replace('px','')) - 138)
+        let desty = this.randomInt(parseInt(getComputedStyle(e.parentElement).height.replace('px','')) - 138)
+        let t1 = this.randomInt(5) + 3
+        let t2 = this.randomInt(5) + 3
+        let str = 'left ' + t1.toString() + 's, top ' + t2.toString() + 's' 
+        e.style.transition = str
+        e.style.left = destx.toString()+'px'
+        e.style.top = desty.toString()+'px'
+        e.style.zIndex = desty.toString()
+        i++
+        }
+      }
+    })
+  }
+
+  enemyHealthBarWidth(enemy, i, j) {
+    var e = <HTMLElement>document.getElementById('f'+j.toString()+(enemy.name + i).toString()).children[1].children[0]
+
+    var percent = enemy.health / enemy.maxHealth
+    percent *= 100
+
+    e.style.width = percent.toString() + '%'
+  }
+
+  setEnemyPos(enemy, i, j) {
+    var e = <HTMLElement>document.getElementById('f'+j.toString()+(enemy.name + i).toString())
+    if(e != null && enemy.init == false) {
+      let x = parseInt(getComputedStyle(e.parentElement).width.replace('px',''))
+      let y = parseInt(getComputedStyle(e.parentElement).height.replace('px',''))
+      let str = (this.randomInt(x - 138)).toString() + 'px'
+      e.style.left = str
+      let str2 = (this.randomInt(y - 138)).toString()
+      e.style.top = str2 + 'px'
+      e.style.zIndex = str2
+      enemy.init = true;
+    }
+  }
+
+  spawnEnemy(index) {
+    let enemyType = ResourceTypes[this.randomInt(ResourceTypes.length)]
+    let enemy = this.generateEnemy(index, enemyType)
+
+    this.data.house.floors[index].enemies.push(enemy)
+  }
+
+  clickEnemy(enemy, floorIndex) {
+    enemy.health -= Math.max(this.data.player.power - enemy.defence, 1)
+
+    if(enemy.health <= 0) {
+      this.killEnemy(enemy, floorIndex)
+    }
+  }
+
+  killEnemy(enemy, floorIndex) {
+    let index = this.data.house.floors[floorIndex].enemies.indexOf(enemy)
+    this.data.player.experience += enemy.rewards.experience
+    this.checkPlayerLevelup()
+    
+    for(var i = 0; i < enemy.rewards.resources.length; i++) {
+      if(!this.data.player.discoveredResources[enemy.rewards.resources[i].type]) {
+        this.data.player.discoveredResources[enemy.rewards.resources[i].type] = true
+      }
+      this.data.player.resources[enemy.rewards.resources[i].type] += enemy.rewards.resources[i].amount
+      if(this.data.player.resources[enemy.rewards.resources[i].type] > this.data.player.maxResource) {
+        this.data.player.resources[enemy.rewards.resources[i].type] = this.data.player.maxResource
+      }
+    }
+
+    this.data.house.floors[floorIndex].enemies.splice(index, 1)
   }
 
   generateEnemyGroup(index) {
@@ -203,6 +285,7 @@ export class Tab1Page implements OnInit {
 
     if(rand < impChance) {
       let enemy = JSON.parse(JSON.stringify(EnemyBaseStats.Imp))
+      enemy.init = false
       enemy.type = type
       enemy.multiplier = rand2
       enemy.health *= enemy.multiplier
@@ -210,13 +293,16 @@ export class Tab1Page implements OnInit {
       enemy.power *= enemy.multiplier
       enemy.defence *= enemy.multiplier
       enemy.rewards.resources[0].amount *= enemy.multiplier
+      enemy.rewards.experience *= enemy.multiplier
+      let r = 5 * enemy.multiplier
       enemy.rewards.resources.push({
         'type': type,
-        'amount': 5 * enemy.multiplier
+        'amount': r
       })
       return enemy
     } else {
       let enemy = JSON.parse(JSON.stringify(EnemyBaseStats.Ogre))
+      enemy.init = false
       enemy.type = type
       enemy.multiplier = rand2
       enemy.health *= enemy.multiplier
@@ -224,9 +310,11 @@ export class Tab1Page implements OnInit {
       enemy.power *= enemy.multiplier
       enemy.defence *= enemy.multiplier
       enemy.rewards.resources[0].amount *= enemy.multiplier
+      enemy.rewards.experience *= enemy.multiplier
+      let r = 100 * enemy.multiplier
       enemy.rewards.resources.push({
         'type': type,
-        'amount': 100
+        'amount': r
       })
       return enemy
     }
@@ -242,6 +330,7 @@ export class Tab1Page implements OnInit {
       this.data.house.floors.push({
         safe: false,
         machines: null,
+        enemies: [],
         groups: []
       })
   

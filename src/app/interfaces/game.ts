@@ -74,6 +74,7 @@ export interface ResourceAmount {
 }
 
 export interface Enemy {
+    init: Boolean,
     name: String,
     description: String,
     type: String,
@@ -103,6 +104,7 @@ export interface Machine {
 export interface Floor {
     safe: Boolean,
     groups: EnemyGroup[],
+    enemies: Enemy[],
     machines: Machine[]
 }
 

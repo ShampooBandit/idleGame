@@ -3,11 +3,11 @@ import { Room, Player, Item, Connection } from 'src/app/interfaces/game';
 import { GameDataService } from '../api/game-data.service';
  
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  selector: 'app-tab0',
+  templateUrl: 'tab0.page.html',
+  styleUrls: ['tab0.page.scss']
 })
-export class Tab1Page implements OnInit {
+export class Tab0Page implements OnInit {
   data: any;
 
   textLog: String;
@@ -18,14 +18,9 @@ export class Tab1Page implements OnInit {
   constructor(private gameData: GameDataService) { }
 
   ngOnInit() {
-    this.data = this.gameData;
-
-    this.data.rooms[0].connections = {
-      'east': this.data.rooms[0],
-      'west': this.data.rooms[0],
-      'north': this.data.rooms[0],
-      'south': this.data.rooms[0]
-    }
+    this.data = {};
+    this.data.rooms = [];
+    this.data.player = {};
 
     this.data.rooms[0] = {
       name: 'Library',
@@ -42,6 +37,15 @@ export class Tab1Page implements OnInit {
       connections: null,
       visited: false
     }
+
+    this.data.rooms[0].connections = {
+      'east': this.data.rooms[0],
+      'west': this.data.rooms[0],
+      'north': this.data.rooms[0],
+      'south': this.data.rooms[0]
+    }
+
+    this.data.player.location = this.data.rooms[0];
 
     this.moveHistory = []
 

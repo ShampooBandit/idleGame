@@ -116,7 +116,8 @@ export class GameDataService {
         {
           safe: true,
           machines: null,
-          groups: []
+          groups: [],
+          enemies: []
         }
       ],
     }
