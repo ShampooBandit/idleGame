@@ -2,7 +2,7 @@
   "name": "idleGame",
   "version": "0.0.1",
   "author": "Ionic Framework",
-  "homepage": "https://shampoobandit.github.io/idleGame/",
+  "homepage": "https://shampoobandit.github.io/idleGame",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ghpage": "ionic build --prod --base-href https://shampoobandit.github.io/idleGame/ && npx angular-cli-ghpages --dir=www"
+    "ghpage": "ionic build --prod --base-href https://shampoobandit.github.io/idleGame && npx angular-cli-ghpages --dir=www"
   },
   "private": true,
   "dependencies": {
