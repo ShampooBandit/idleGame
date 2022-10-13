@@ -24,3 +24,35 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@keyframes OpalColors {
+    25% { background-color: rgb(166, 219, 250); } 
+    50% { background-color: rgb(101, 205, 253); } 
+    75% { background-color: rgb(184, 253, 189); } 
+    100% { background-color: rgb(254, 201, 255); }
+}
+
+@keyframes RainbowColors {
+    20% { background-color: rgb(224, 224, 0); } 
+    40% { background-color: rgb(224, 160, 192); } 
+    60% { background-color: rgb(87, 146, 255); } 
+    80% { background-color: rgb(255, 117, 20); }
+    100% { background-color: rgb(0, 224, 128); }
+}
+
+@keyframes PolychromiteColors {
+    7% { background-color: rgb(255, 142, 145); } 
+    14% { background-color: rgb(254, 136, 111); } 
+    21% { background-color: rgb(247, 158, 51); } 
+    28% { background-color: rgb(208, 164, 25); }
+    35% { background-color: rgb(156, 183, 34); }
+    42% { background-color: rgb(112, 177, 39); }
+    50% { background-color: rgb(75, 200, 63); }
+    57% { background-color: rgb(27, 192, 129); }
+    64% { background-color: rgb(24, 185, 186); }
+    71% { background-color: rgb(63, 192, 195); }
+    78% { background-color: rgb(91, 171, 255); }
+    85% { background-color: rgb(161, 203, 243); }
+    92% { background-color: rgb(224, 128, 193); }
+    100% { background-color: rgb(255, 125, 192); }
+}

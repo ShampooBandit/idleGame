@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EnemyBaseStats, ResourceTypes } from 'src/app/interfaces/game';
+import { EnemyBaseStats, ResourceColors, ResourceTypes } from 'src/app/interfaces/game';
 import { GameDataService } from '../api/game-data.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
  
@@ -46,7 +46,7 @@ export class Tab1Page implements OnInit {
     //})
     setInterval(() => {this.checkForEnemies()}, 5000)
   }
-
+  /*
   startBattle(targetGroup, floorNum) {
     let box = document.getElementById('battleContainer')
 
@@ -119,22 +119,6 @@ export class Tab1Page implements OnInit {
     }
   }
 
-  checkPlayerLevelup() {
-    if(this.data.player.experience >= this.data.player.nextExperience) {
-      this.data.player.experience = 0
-
-      this.data.player.maxHealth += (5 * this.data.player.level)
-      this.data.player.maxResource += (10 * this.data.player.level)
-
-      this.data.player.power += 2
-      this.data.player.defence += 1
-
-      this.data.player.nextExperience += 50 * this.data.player.level
-
-      this.data.player.level += 1
-    }
-  }
-
   winBattle() {
     var index = this.data.house.floors[this.battleTargetFloor].groups.indexOf(this.battleTargetGroup)
 
@@ -153,6 +137,23 @@ export class Tab1Page implements OnInit {
 
     box.classList.remove('grown')
     box.style.animationName = 'shrinkToCenter'
+  }
+  */
+  checkPlayerLevelup() {
+    if(this.data.player.experience >= this.data.player.nextExperience) {
+      this.data.player.experience = 0
+
+      this.data.player.maxHealth += (5 * this.data.player.level)
+      this.data.player.health = this.data.player.maxHealth
+      this.data.player.maxResource += (10 * this.data.player.level)
+
+      this.data.player.power += 10
+      this.data.player.defence += 5
+
+      this.data.player.nextExperience += 50 * this.data.player.level
+
+      this.data.player.level += 1
+    }
   }
 
   randomInt(num) {
@@ -188,8 +189,8 @@ export class Tab1Page implements OnInit {
         let v = 'f'+floorNum.toString()+enemy.name+i
         let e = <HTMLElement>document.getElementById('f'+floorNum.toString()+enemy.name+i)
         if(e != null) {
-        let destx = this.randomInt(parseInt(getComputedStyle(e.parentElement).width.replace('px','')) - 138)
-        let desty = this.randomInt(parseInt(getComputedStyle(e.parentElement).height.replace('px','')) - 138)
+        let destx = this.randomInt(parseInt(getComputedStyle(e.parentElement).width.replace('px','')) - 138) + 5
+        let desty = this.randomInt(parseInt(getComputedStyle(e.parentElement).height.replace('px','')) - 138) + 5
         let t1 = this.randomInt(5) + 3
         let t2 = this.randomInt(5) + 3
         let str = 'left ' + t1.toString() + 's, top ' + t2.toString() + 's' 
@@ -204,12 +205,25 @@ export class Tab1Page implements OnInit {
   }
 
   enemyHealthBarWidth(enemy, i, j) {
-    var e = <HTMLElement>document.getElementById('f'+j.toString()+(enemy.name + i).toString()).children[1].children[0]
+    let e = <HTMLElement>document.getElementById('f'+j.toString()+(enemy.name + i).toString()).children[1].children[0]
 
-    var percent = enemy.health / enemy.maxHealth
+    let percent = enemy.health / enemy.maxHealth
     percent *= 100
 
     e.style.width = percent.toString() + '%'
+    this.enemyHealthBarColor(enemy, e)
+  }
+
+  enemyHealthBarColor(enemy, elem) {
+    let c = ResourceColors[enemy.type]
+    if (c.length > 1) {
+      elem.style.animation = enemy.type + 'Colors'
+      elem.style.animationDuration = '3s'
+    }
+    else {
+      c = c[0]
+      elem.style.backgroundColor = "rgb(" + c[0].toString() + "," + c[1].toString() + "," + c[2].toString() + ")"
+    }
   }
 
   setEnemyPos(enemy, i, j) {

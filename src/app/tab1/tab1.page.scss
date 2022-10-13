@@ -58,8 +58,9 @@
 
 .fillbar {
     border-radius: 2px;
-    background-color: #1ab3f1;
+    //background-color: #1ab3f1;
     height: 100%;
+    animation-iteration-count: infinite !important;
 }
 
 .floor-content {

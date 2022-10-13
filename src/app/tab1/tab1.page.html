@@ -16,8 +16,6 @@
       </div>
 
       <section class="floor-content">
-        <ul class="floor-drops-container">
-        </ul>
         <ul class="floor-enemy-container">
           <li class="floor-enemy" *ngFor="let e of f.enemies; index as k" id="{{'f'+i.toString()+(e.name + k).toString()}}">
             <span class="floor-enemy-name">{{setEnemyPos(e, k, i)}}{{e.type}} {{e.name}}</span>
