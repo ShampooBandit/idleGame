@@ -231,9 +231,9 @@ export class Tab1Page implements OnInit {
     if(e != null && enemy.init == false) {
       let x = parseInt(getComputedStyle(e.parentElement).width.replace('px',''))
       let y = parseInt(getComputedStyle(e.parentElement).height.replace('px',''))
-      let str = (this.randomInt(x - 138)).toString() + 'px'
+      let str = (Math.max(this.randomInt(x - 138),0)).toString() + 'px'
       e.style.left = str
-      let str2 = (this.randomInt(y - 138)).toString()
+      let str2 = (Math.max(this.randomInt(y - 138),0) + 2).toString()
       e.style.top = str2 + 'px'
       e.style.zIndex = str2
       enemy.init = true;
